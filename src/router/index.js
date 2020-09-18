@@ -1,20 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MainPage from "../views/MainPage.vue";
-import About from "../views/About.vue";
+import RepsPage from "../views/RepsPage";
+import DetailPage from "../views/DetailPage";
+import AboutPage from "../views/AboutPage";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "MainPage",
-    component: MainPage,
+    name: "RepsPage",
+    component: RepsPage,
+  },
+  {
+    path: "/:id",
+    name: "DetailPage",
+    component: DetailPage,
   },
   {
     path: "/about",
-    name: "About",
-    component: About,
+    name: "AboutPage",
+    component: AboutPage,
   },
 ];
 

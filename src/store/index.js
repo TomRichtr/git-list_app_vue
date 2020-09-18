@@ -1,12 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { githubAxiosInstance } from "../axios";
-import { gitHubUser } from "../axios";
+import { githubAxiosInstance, gitHubUser } from "../axios";
+import router from "../router/index";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { reps: [], branches: [], commits: [] },
+  state: { reps: [], branches: [], commits: [], issues: [] },
   mutations: {
     storeReps(state, repsList) {
       state.reps = repsList;
@@ -17,8 +17,8 @@ export default new Vuex.Store({
     storeCommits(state, commitsList) {
       state.commits = commitsList;
     },
-    storeRate(state, rate) {
-      state.rate = rate;
+    storeIssues(state, issuesList) {
+      state.issues = issuesList;
     },
   },
   actions: {
@@ -30,29 +30,42 @@ export default new Vuex.Store({
         })
         .catch((error) => console.log(error));
     },
-    fetchCommits({ commit }, repId) {
+    fetchCommits({ commit }, repName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repId}/commits`)
+        .get(`repos/${gitHubUser}/${repName}/commits`)
+        .then((res) => {
+          const commitsSorted = res.data.sort((a, b) => {
+            return Date.parse(a.commit.author.date) >
+              Date.parse(b.commit.author.date)
+              ? -1
+              : 1;
+          });
+          const commitsSliced = commitsSorted.slice(0, 10);
+          commit("storeCommits", commitsSliced);
+        })
+        .catch((error) => console.log(error));
+    },
+    fetchBranches({ commit }, repName) {
+      githubAxiosInstance
+        .get(`repos/${gitHubUser}/${repName}/branches`)
         .then((res) => {
           commit("storeBranches", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchBranches({ commit }, repId) {
+    fetchIssues({ commit }, repName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repId}/branches`)
+        .get(`repos/${gitHubUser}/${repName}/issues`)
         .then((res) => {
-          commit("storeBranches", res.data);
+          commit("storeIssues", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchRate({ commit }) {
-      githubAxiosInstance
-        .get(`rate_limit`)
-        .then((res) => {
-          commit("storeRate", res.data);
-        })
-        .catch((error) => console.log(error));
+    goToDetail({ dispatch }, parameters) {
+      dispatch("fetchIssues", parameters.repName);
+      dispatch("fetchBranches", parameters.repName);
+      dispatch("fetchCommits", parameters.repName);
+      router.push(`/${parameters.id}`);
     },
   },
   getters: {
@@ -64,6 +77,9 @@ export default new Vuex.Store({
     },
     commitsGetter: (state) => {
       return state.commits;
+    },
+    issuesGetter: (state) => {
+      return state.issues;
     },
   },
 });

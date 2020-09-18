@@ -1,12 +1,12 @@
 <template>
-  <div><RepsList></RepsList></div>
+  <div><Reps></Reps></div>
 </template>
 
 <script>
-import RepsList from "../components/RepsList";
+import Reps from "../components/Reps";
 export default {
   components: {
-    RepsList,
+    Reps,
   },
 };
 </script>

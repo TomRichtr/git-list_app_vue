@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="top-wrapper">
     <div
       :class="[checkEvenRep(i), checkLanguageRep(rep.language)]"
       class="rep-wrapper"
@@ -33,7 +33,7 @@
           <div class="col-sm rep-column-right">
             <p class="title title-right text-right">Created By</p>
             <a class="text text-link text-right" :href="rep.owner.html_url"
-              >{{ convertString(rep.owner.login) }}
+              >{{ rep.owner.login }}
               <font-awesome-icon
                 class="link-marker"
                 :icon="['fa', 'mouse']"
@@ -53,7 +53,7 @@
             </p>
           </div>
           <div class="col-sm rep-column-right">
-            <p class="title title-right text-right">Number of Issues:</p>
+            <p class="title title-right text-right">Number of Issues</p>
             <p class="text text-right">{{ rep.open_issues_count }}</p>
           </div>
         </div>
@@ -76,7 +76,11 @@ export default {
   },
   methods: {
     goToRepDetail(id, repName) {
-      this.$store.dispatch("goToDetail", { id: id, repName: repName });
+      this.$router.push({
+        name: "DetailPage",
+        params: { id: id, repName: repName },
+      });
+      this.$store.dispatch("setStateRepName", repName);
     },
     getRate() {
       this.$store.dispatch("fetchRate");
@@ -159,6 +163,11 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.link-marker {
+  margin-left: $xs-size/5;
+  color: $color4;
+}
+
 .rep-wrapper-link {
   width: 100%;
   height: 100%;
@@ -186,22 +195,21 @@ export default {
   border-left-style: solid;
 }
 .even-rep-wrapper {
-  background-color: transparentize($color: $color1, $amount: 0.5);
-  transition: background 0.5s ease, border 0.5s ease;
+  background-color: $color1;
+  transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: transparentize($color: $color4, $amount: 0.5);
+    background-color: $color3;
     border-left-width: $xl-size;
     cursor: pointer;
   }
 }
 .odd-rep-wrapper {
-  background-color: transparentize($color: $color5, $amount: 0.5);
-
-  transition: background 0.5s ease, border 0.5s ease;
+  background-color: $color2;
+  transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: transparentize($color: $color4, $amount: 0.5);
+    background-color: $color3;
     border-left-width: $xl-size;
     cursor: pointer;
   }
@@ -209,7 +217,7 @@ export default {
 .text {
   margin: 0px;
   padding: 0px;
-  color: $color2;
+  color: $color4;
   font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
@@ -225,7 +233,7 @@ export default {
   font-size: $xs-size;
   margin: 0px;
   padding: 0px;
-  color: $color3;
+  color: $color5;
   font-weight: bold;
   font-family: "Roboto Condensed", sans-serif;
 }
@@ -274,8 +282,5 @@ export default {
 }
 .plpgsql {
   border-left-color: #dad8d8;
-}
-.link-marker {
-  color: $color2;
 }
 </style>

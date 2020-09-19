@@ -1,12 +1,37 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersistence from "vuex-persist";
+import Cookies from "js-cookie";
 import { githubAxiosInstance, gitHubUser } from "../axios";
-import router from "../router/index";
 
 Vue.use(Vuex);
 
+const vuexCookie = new VuexPersistence({
+  restoreState: (key) => Cookies.getJSON(key),
+  saveState: (key, state) =>
+    Cookies.set(key, state, {
+      expires: 1,
+    }),
+  reducer: (state) => ({
+    repName: state.repName,
+  }),
+});
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  reducer: (state) => ({
+    repName: state.repName,
+  }),
+});
+
 export default new Vuex.Store({
-  state: { reps: [], branches: [], commits: [], issues: [] },
+  state: {
+    reps: [],
+    branches: [],
+    commits: [],
+    issues: [],
+    repName: "",
+  },
   mutations: {
     storeReps(state, repsList) {
       state.reps = repsList;
@@ -20,8 +45,14 @@ export default new Vuex.Store({
     storeIssues(state, issuesList) {
       state.issues = issuesList;
     },
+    storeRepName(state, repName) {
+      state.repName = repName;
+    },
   },
   actions: {
+    setStateRepName({ commit }, repName) {
+      commit("storeRepName", repName);
+    },
     fetchReps({ commit }) {
       githubAxiosInstance
         .get(`users/${gitHubUser}/repos`)
@@ -61,12 +92,6 @@ export default new Vuex.Store({
         })
         .catch((error) => console.log(error));
     },
-    goToDetail({ dispatch }, parameters) {
-      dispatch("fetchIssues", parameters.repName);
-      dispatch("fetchBranches", parameters.repName);
-      dispatch("fetchCommits", parameters.repName);
-      router.push(`/${parameters.id}`);
-    },
   },
   getters: {
     repsGetter: (state) => {
@@ -81,5 +106,9 @@ export default new Vuex.Store({
     issuesGetter: (state) => {
       return state.issues;
     },
+    repNameGetter: (state) => {
+      return state.repName;
+    },
   },
+  plugins: [vuexCookie.plugin, vuexLocal.plugin],
 });

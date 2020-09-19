@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import RepsPage from "../views/RepsPage";
 import DetailPage from "../views/DetailPage";
 import AboutPage from "../views/AboutPage";
+import store from "../store/index";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,13 @@ const routes = [
     path: "/:id",
     name: "DetailPage",
     component: DetailPage,
+    beforeEnter(to, from, next) {
+      if (store.state.repName != "") {
+        next();
+      } else {
+        next("/");
+      }
+    },
   },
   {
     path: "/about",

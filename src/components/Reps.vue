@@ -1,5 +1,5 @@
 <template>
-  <div class="top-wrapper">
+  <div class="main-wrapper">
     <div
       :class="[checkEvenRep(i), checkLanguageRep(rep.language)]"
       class="rep-wrapper"
@@ -81,6 +81,7 @@ export default {
         params: { id: id },
       });
       this.$store.dispatch("setStateRepName", { repName: repName, id: id });
+      this.$store.dispatch("setHeaderOption", "commits");
     },
     getRate() {
       this.$store.dispatch("fetchRate");
@@ -163,9 +164,19 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.main-wrapper {
+  background-color: lighten($color: $primary, $amount: 20%);
+  width: 100%;
+  height: 100vh;
+  margin-top: $l-size * 1.1;
+  @media (max-width: $breakpoint-s) {
+    margin-top: $l-size * 1.3;
+  }
+}
+
 .link-marker {
   margin-left: $xs-size/5;
-  color: $color4;
+  color: $secondary;
 }
 
 .rep-wrapper-link {
@@ -200,26 +211,26 @@ export default {
 .rep-wrapper {
   width: 100%;
   padding: $xs-size;
-  background: $color1;
+  background: $primary;
   border-left-width: $xs-size;
   border-left-style: solid;
 }
 .even-rep-wrapper {
-  background-color: $color1;
+  background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
     cursor: pointer;
   }
 }
 .odd-rep-wrapper {
-  background-color: $color2;
+  background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
     cursor: pointer;
   }
@@ -227,7 +238,7 @@ export default {
 .text {
   margin: 0px;
   padding: 0px;
-  color: $color4;
+  color: $secondary;
   font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
@@ -252,7 +263,7 @@ export default {
   font-size: $xs-size;
   margin: 0px;
   padding: 0px;
-  color: $color5;
+  color: $dark;
   font-weight: bold;
   font-family: "Roboto Condensed", sans-serif;
 }

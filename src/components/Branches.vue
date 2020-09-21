@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-wrapper">
     <div
       :class="checkEvenBranch(i)"
       class="branch-wrapper"
@@ -10,14 +10,14 @@
       <div class="branch-wrapper-link">
         <div class="row">
           <div class="col-sm branch-column-left">
-            <p class="title title-left text text-left">
+            <p class="title">
               Name
             </p>
-            <p class="text text-left">{{ convertStringTitle(branch.name) }}</p>
+            <p class="text">{{ convertStringTitle(branch.name) }}</p>
           </div>
           <div class="col-sm branch-column-right">
-            <p class="title title-right text-right">Protection Status</p>
-            <p class="text text-right">
+            <p class="title">Protection Status</p>
+            <p class="text">
               {{ convertProctectionStatus(branch.protected) }}
             </p>
           </div>
@@ -60,9 +60,18 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.main-wrapper {
+  background-color: lighten($color: $primary, $amount: 20%);
+  width: 100%;
+  height: 100vh;
+  margin-top: $l-size * 1.1;
+  @media (max-width: $breakpoint-s) {
+    margin-top: $l-size * 1.3;
+  }
+}
 .link-marker {
   margin-left: $xs-size/5;
-  color: $color4;
+  color: $dark;
 }
 .text-link {
   display: inline-block;
@@ -71,13 +80,7 @@ export default {
   align-items: right;
   text-align: right;
 }
-.text-link.text-right {
-  align-items: right;
-  align-self: right;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
+
 .issue-column-left {
   align-items: left;
   text-align: left;
@@ -88,60 +91,43 @@ export default {
 .branch-wrapper {
   width: 100%;
   padding: $xs-size;
-  background: $color1;
+  background: $primary;
   border-left-width: $xs-size;
   border-left-style: solid;
-  border-left-color: $color5;
+  border-left-color: $info;
 }
 .even-branch-wrapper {
-  background-color: $color1;
+  background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
-    cursor: pointer;
   }
 }
 .odd-branch-wrapper {
-  background-color: $color2;
+  background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
-    cursor: pointer;
   }
 }
 .text {
   margin: 0px;
   padding: 0px;
-  color: $color4;
+  color: $dark;
+  text-align: center;
   font-family: "Roboto Condensed", sans-serif;
 }
-.text-left {
-  text-align: left;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-center {
-  text-align: center;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-right {
-  text-align: right;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
+
 .title {
   font-size: $xs-size;
+  text-align: center;
   margin: 0px;
   padding: 0px;
-  color: $color5;
+  color: $dark;
   font-weight: bold;
   font-family: "Roboto Condensed", sans-serif;
 }

@@ -3,5 +3,5 @@
 @import "./variables.scss";
 
 body {
-  background-color: lighten($color: black, $amount: 90%);
+  background-color: $light;
 }

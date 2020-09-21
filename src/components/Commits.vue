@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-wrapper">
     <div
       :class="checkEvenIssue(i)"
       class="issue-wrapper"
@@ -30,7 +30,9 @@
           </div>
           <div class="col-sm issue-column-right">
             <p class="title title-right text-right">User ID</p>
-            <a class="text text-link text-right"
+            <a
+              class="text text-link text-right"
+              :href="commit.committer.html_url"
               >{{ commit.committer.login }}
               <font-awesome-icon
                 class="link-marker"
@@ -92,10 +94,19 @@ export default {
 
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
+.main-wrapper {
+  background-color: lighten($color: $primary, $amount: 20%);
+  width: 100%;
+  height: 100vh;
+  margin-top: $l-size * 1.1;
+  @media (max-width: $breakpoint-s) {
+    margin-top: $l-size * 1.3;
+  }
+}
 
 .link-marker {
   margin-left: $xs-size/5;
-  color: $color4;
+  color: $secondary;
 }
 .text-link {
   display: inline-block;
@@ -121,35 +132,33 @@ export default {
 .issue-wrapper {
   width: 100%;
   padding: $xs-size;
-  background: $color1;
+  background: $primary;
   border-left-width: $xs-size;
   border-left-style: solid;
-  border-left-color: $color5;
+  border-left-color: $success;
 }
 .even-issue-wrapper {
-  background-color: $color1;
+  background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
-    cursor: pointer;
   }
 }
 .odd-issue-wrapper {
-  background-color: $color2;
+  background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: $color3;
+    background-color: $danger;
     border-left-width: $xl-size;
-    cursor: pointer;
   }
 }
 .text {
   margin: 0px;
   padding: 0px;
-  color: $color4;
+  color: $secondary;
   font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
@@ -174,7 +183,7 @@ export default {
   font-size: $xs-size;
   margin: 0px;
   padding: 0px;
-  color: $color5;
+  color: $dark;
   font-weight: bold;
   font-family: "Roboto Condensed", sans-serif;
 }

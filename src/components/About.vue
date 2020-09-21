@@ -72,7 +72,6 @@ export default {};
 .column-wrapper {
   text-align: center;
 }
-
 .title {
   font-size: $xs-size;
   margin: 0px;
@@ -80,7 +79,6 @@ export default {};
   color: $dark;
   font-weight: bold;
 }
-
 .text-link {
   margin-top: 0;
   margin-bottom: 1rem;

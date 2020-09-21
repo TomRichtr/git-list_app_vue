@@ -131,7 +131,7 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
@@ -142,7 +142,7 @@ export default {
 .issue-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
@@ -179,19 +179,19 @@ export default {
 }
 .text-left {
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
 .text-center {
   text-align: center;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
 .text-right {
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }

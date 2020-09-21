@@ -98,7 +98,7 @@ export default {
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -113,14 +113,14 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
 .issue-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
@@ -161,19 +161,19 @@ export default {
 }
 .text-left {
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
 .text-center {
   text-align: center;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }
 .text-right {
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $breakpoint-s) {
     text-align: center !important;
   }
 }

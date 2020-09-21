@@ -62,7 +62,6 @@ export default {};
   justify-content: center;
 }
 .main-wrapper {
-  background-color: lighten($color: $primary, $amount: 20%);
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
@@ -80,7 +79,6 @@ export default {};
   padding: 0px;
   color: $dark;
   font-weight: bold;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 .text-link {

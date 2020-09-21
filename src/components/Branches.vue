@@ -61,7 +61,6 @@ export default {
 @import "../../scss/variables.scss";
 
 .main-wrapper {
-  background-color: lighten($color: $primary, $amount: 20%);
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
@@ -119,7 +118,6 @@ export default {
   padding: 0px;
   color: $dark;
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 .title {
@@ -129,6 +127,5 @@ export default {
   padding: 0px;
   color: $dark;
   font-weight: bold;
-  font-family: "Roboto Condensed", sans-serif;
 }
 </style>

@@ -140,10 +140,6 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
-ul {
-  cursor: pointer;
-}
-
 .slide-enter-active {
   -moz-transition-duration: 1s;
   -webkit-transition-duration: 1s;
@@ -197,7 +193,6 @@ ul {
 .option-wrapper {
   width: 100%;
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
   padding: $xs-size;
   align-content: space-between;
   &:hover {
@@ -219,7 +214,7 @@ ul {
   color: lighten($color: $light, $amount: 5%) !important;
   &:hover {
     cursor: not-allowed;
-    background: darken($color: $primary, $amount: 15%) !important;
+    background-color: darken($color: $primary, $amount: 15%);
   }
 }
 .navbar-icon {

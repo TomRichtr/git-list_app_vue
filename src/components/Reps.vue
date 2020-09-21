@@ -165,7 +165,6 @@ export default {
 @import "../../scss/variables.scss";
 
 .main-wrapper {
-  background-color: lighten($color: $primary, $amount: 20%);
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
@@ -193,14 +192,14 @@ export default {
 .rep-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .rep-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
@@ -239,23 +238,22 @@ export default {
   margin: 0px;
   padding: 0px;
   color: $secondary;
-  font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .text-center {
   text-align: center;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .text-right {
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
@@ -265,7 +263,6 @@ export default {
   padding: 0px;
   color: $dark;
   font-weight: bold;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 .javascript {

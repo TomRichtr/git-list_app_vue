@@ -24,7 +24,7 @@
           </div>
           <div class="col-sm issue-column-middle">
             <p class="title title-right text text-center">Message</p>
-            <p class="text text text-center">
+            <p class="text text text-center" :title="commit.commit.message">
               {{ convertStringTitle(commit.commit.message) }}
             </p>
           </div>
@@ -95,11 +95,10 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 .main-wrapper {
-  background-color: lighten($color: $primary, $amount: 20%);
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -114,14 +113,14 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .issue-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
@@ -159,23 +158,22 @@ export default {
   margin: 0px;
   padding: 0px;
   color: $secondary;
-  font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .text-center {
   text-align: center;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
 .text-right {
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }
@@ -185,6 +183,5 @@ export default {
   padding: 0px;
   color: $dark;
   font-weight: bold;
-  font-family: "Roboto Condensed", sans-serif;
 }
 </style>

@@ -136,7 +136,6 @@ export default {
 .option-wrapper {
   width: 100%;
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
   padding: $xs-size;
   align-content: space-between;
   background-color: darken($color: $primary, $amount: 15%);
@@ -159,7 +158,7 @@ export default {
   color: lighten($color: $light, $amount: 5%) !important;
   &:hover {
     cursor: not-allowed;
-    background: $light !important;
+    background-color: darken($color: $primary, $amount: 15%);
   }
 }
 </style>

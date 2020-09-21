@@ -4,4 +4,6 @@
 
 body {
   background-color: $light;
+  background-color: lighten($color: $primary, $amount: 20%);
+  font-family: "Roboto Condensed", sans-serif;
 }

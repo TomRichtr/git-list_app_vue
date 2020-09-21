@@ -1,7 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import RepsPage from "../views/RepsPage";
-import DetailPage from "../views/DetailPage";
+import BranchesPage from "../views/BranchesPage";
+import CommitsPage from "../views/CommitsPage";
+import IssuesPage from "../views/IssuesPage";
 import AboutPage from "../views/AboutPage";
 import store from "../store/index";
 
@@ -14,9 +16,33 @@ const routes = [
     component: RepsPage,
   },
   {
-    path: "/:id",
-    name: "DetailPage",
-    component: DetailPage,
+    path: "/:id/commits",
+    name: "CommitsPage",
+    component: CommitsPage,
+    beforeEnter(to, from, next) {
+      if (store.state.repName != "") {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/:id/branches",
+    name: "BranchesPage",
+    component: BranchesPage,
+    beforeEnter(to, from, next) {
+      if (store.state.repName != "") {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/:id/issues",
+    name: "IssuesPage",
+    component: IssuesPage,
     beforeEnter(to, from, next) {
       if (store.state.repName != "") {
         next();

@@ -95,6 +95,7 @@ export default {
 
 .link-marker {
   margin-left: $xs-size/5;
+  color: $color4;
 }
 .text-link {
   display: inline-block;
@@ -102,6 +103,16 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
+}
+.issue-column-left {
+  align-items: left;
+  text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-link.text-right {
   align-items: right;
@@ -116,22 +127,21 @@ export default {
   border-left-color: $color5;
 }
 .even-issue-wrapper {
-  background-color: transparentize($color: $color1, $amount: 0.5);
-  transition: background 0.5s ease, border 0.5s ease;
+  background-color: $color1;
+  transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: transparentize($color: $color4, $amount: 0.5);
+    background-color: $color3;
     border-left-width: $xl-size;
     cursor: pointer;
   }
 }
 .odd-issue-wrapper {
-  background-color: transparentize($color: $color5, $amount: 0.5);
-
-  transition: background 0.5s ease, border 0.5s ease;
+  background-color: $color2;
+  transition: background 1s ease, border 0.5s ease;
   &:hover {
     text-decoration: none;
-    background-color: transparentize($color: $color4, $amount: 0.5);
+    background-color: $color3;
     border-left-width: $xl-size;
     cursor: pointer;
   }
@@ -139,23 +149,32 @@ export default {
 .text {
   margin: 0px;
   padding: 0px;
-  color: $color2;
+  color: $color4;
   font-family: "Roboto Condensed", sans-serif;
 }
 .text-left {
   text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-center {
   text-align: center;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-right {
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .title {
   font-size: $xs-size;
   margin: 0px;
   padding: 0px;
-  color: $color3;
+  color: $color5;
   font-weight: bold;
   font-family: "Roboto Condensed", sans-serif;
 }

@@ -14,6 +14,8 @@ const vuexCookie = new VuexPersistence({
     }),
   reducer: (state) => ({
     repName: state.repName,
+    id: state.id,
+    option: state.option,
   }),
 });
 
@@ -21,6 +23,8 @@ const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: (state) => ({
     repName: state.repName,
+    id: state.id,
+    option: state.option,
   }),
 });
 
@@ -31,6 +35,8 @@ export default new Vuex.Store({
     commits: [],
     issues: [],
     repName: "",
+    id: "",
+    option: "Repositories",
   },
   mutations: {
     storeReps(state, repsList) {
@@ -48,10 +54,20 @@ export default new Vuex.Store({
     storeRepName(state, repName) {
       state.repName = repName;
     },
+    storeId(state, id) {
+      state.id = id;
+    },
+    storeHeaderOption(state, option) {
+      state.option = option;
+    },
   },
   actions: {
-    setStateRepName({ commit }, repName) {
-      commit("storeRepName", repName);
+    setHeaderOption({ commit }, option) {
+      commit("storeHeaderOption", option);
+    },
+    setStateRepName({ commit }, IdAndRepName) {
+      commit("storeRepName", IdAndRepName.repName);
+      commit("storeId", IdAndRepName.id);
     },
     fetchReps({ commit }) {
       githubAxiosInstance
@@ -108,6 +124,12 @@ export default new Vuex.Store({
     },
     repNameGetter: (state) => {
       return state.repName;
+    },
+    repIdGetter: (state) => {
+      return state.id;
+    },
+    headerOptionGetter: (state) => {
+      return state.option;
     },
   },
   plugins: [vuexCookie.plugin, vuexLocal.plugin],

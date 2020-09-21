@@ -124,10 +124,20 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-link.text-right {
   align-items: right;
   align-self: right;
+}
+.issue-column-left {
+  align-items: left;
+  text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .issue-wrapper {
   width: 100%;
@@ -165,12 +175,21 @@ export default {
 }
 .text-left {
   text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-center {
   text-align: center;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-right {
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .title {
   font-size: $xs-size;

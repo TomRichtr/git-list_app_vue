@@ -1,9 +1,10 @@
 <template>
-  <div></div>
+  <div><About></About></div>
 </template>
 
 <script>
-export default {};
+import About from "../components/About";
+export default { components: { About } };
 </script>
 
 <style scoped lang="scss"></style>

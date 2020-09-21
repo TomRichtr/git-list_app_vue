@@ -77,10 +77,10 @@ export default {
   methods: {
     goToRepDetail(id, repName) {
       this.$router.push({
-        name: "DetailPage",
-        params: { id: id, repName: repName },
+        name: "CommitsPage",
+        params: { id: id },
       });
-      this.$store.dispatch("setStateRepName", repName);
+      this.$store.dispatch("setStateRepName", { repName: repName, id: id });
     },
     getRate() {
       this.$store.dispatch("fetchRate");
@@ -182,6 +182,16 @@ export default {
 .rep-column-right {
   align-items: right;
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
+}
+.rep-column-left {
+  align-items: left;
+  text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-link.text-right {
   align-items: right;
@@ -222,12 +232,21 @@ export default {
 }
 .text-left {
   text-align: left;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-center {
   text-align: center;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .text-right {
   text-align: right;
+  @media (max-width: $breakpoint-s) {
+    text-align: center !important;
+  }
 }
 .title {
   font-size: $xs-size;

@@ -21,6 +21,8 @@
     "normalize.css": "^8.0.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
+    "vue-breakpoints": "^1.1.0",
+    "vue-not-visible": "^1.0.9",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
     "vuex-persist": "^3.1.0"

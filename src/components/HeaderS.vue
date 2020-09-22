@@ -24,6 +24,8 @@
               ? 'marked'
               : settedOption === 'reps'
               ? 'disabled'
+              : settedOption === 'about'
+              ? 'disabled'
               : '',
           ]"
         >
@@ -37,6 +39,8 @@
               ? 'marked'
               : settedOption === 'reps'
               ? 'disabled'
+              : settedOption === 'about'
+              ? 'disabled'
               : '',
           ]"
         >
@@ -49,6 +53,8 @@
             settedOption === 'issues'
               ? 'marked'
               : settedOption === 'reps'
+              ? 'disabled'
+              : settedOption === 'about'
               ? 'disabled'
               : '',
           ]"
@@ -84,52 +90,62 @@ export default {
       this.collapsed = !this.collapsed;
     },
     goToRepositories() {
-      this.$router.push({
-        name: "RepsPage",
-      });
+      this.$router
+        .push({
+          name: "RepsPage",
+        })
+        .catch(() => {});
       this.$store.dispatch("setHeaderOption", "reps");
       this.collapsed = false;
     },
     goToBranches() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "BranchesPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "BranchesPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "branches");
         this.collapsed = false;
       }
     },
     goToCommits() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "CommitsPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "CommitsPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "commits");
         this.collapsed = false;
       }
     },
     goToIssues() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "IssuesPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "IssuesPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "issues");
         this.collapsed = false;
       }
     },
     goToAbout() {
-      this.$router.push({
-        name: "AboutPage",
-      });
+      this.$router
+        .push({
+          name: "AboutPage",
+        })
+        .catch(() => {});
       this.$store.dispatch("setHeaderOption", "about");
       this.collapsed = false;
     },
@@ -182,7 +198,7 @@ export default {
   background-color: darken($color: $primary, $amount: 15%);
 }
 .hidden-l {
-  @media (min-width: $breakpoint-s) {
+  @media (min-width: $breakpoint-s + 1) {
     display: none !important;
   }
 }

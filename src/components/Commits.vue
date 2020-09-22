@@ -22,7 +22,7 @@
                 size="sm"
             /></a>
           </div>
-          <div class="col-sm issue-column-middle">
+          <div class="col-sm issue-column-center">
             <p class="title title-right text text-center">Message</p>
             <p class="text text text-center" :title="commit.commit.message">
               {{ convertStringTitle(commit.commit.message) }}
@@ -30,10 +30,8 @@
           </div>
           <div class="col-sm issue-column-right">
             <p class="title title-right text-right">User ID</p>
-            <a
-              class="text text-link text-right"
-              :href="commit.committer.html_url"
-              >{{ commit.committer.login }}
+            <a class="text text-link text-right" :href="commit.html_url"
+              >{{ commit.author.login }}
               <font-awesome-icon
                 class="link-marker"
                 :icon="['fa', 'mouse']"
@@ -48,8 +46,8 @@
               {{ convertDate(commit.commit.author.date) }}
             </p>
           </div>
-          <div class="col-sm issue-column-middle">
-            <p class="title title-middle text-center"></p>
+          <div class="col-sm issue-column-center">
+            <p class="title title-center text-center"></p>
             <p class="text text-center"></p>
           </div>
           <div class="col-sm issue-column-right">
@@ -113,7 +111,7 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $breakpoint-m) {
     text-align: center !important;
   }
 }

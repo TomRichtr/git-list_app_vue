@@ -10,49 +10,52 @@
     >
       <div class="rep-wrapper-link">
         <div class="row">
-          <div class="col-sm rep-column-left">
+          <div class="col-sm col-md-6 rep-column-left">
             <p class="title title-left text-left">Name / Language</p>
-            <a
+            <p
               class="text text-link text-left"
               :title="rep.name"
               :href="rep.svn_url"
-              >{{ convertStringTitle(rep.name) }} {{ slashCheck(rep.language) }}
+            >
+              {{ convertStringTitle(rep.name) }} {{ slashCheck(rep.language) }}
               {{ convertString(rep.language) }}
               <font-awesome-icon
                 class="link-marker"
                 :icon="['fa', 'mouse']"
                 size="sm"
-            /></a>
+              />
+            </p>
           </div>
-          <div class="col-sm rep-column-middle">
+          <div class="col-sm col-md-6 rep-column-middle">
             <p class="title title-right text text-center">Description</p>
             <p class="text text text-center" :title="rep.description">
               {{ convertStringDescription(rep.description) }}
             </p>
           </div>
-          <div class="col-sm rep-column-right">
+          <div class="col-sm col-md-6 rep-column-right">
             <p class="title title-right text-right">Created By</p>
-            <a class="text text-link text-right" :href="rep.owner.html_url"
-              >{{ rep.owner.login }}
+            <p class="text text-link text-right" :href="rep.owner.html_url">
+              {{ rep.owner.login }}
               <font-awesome-icon
                 class="link-marker"
                 :icon="['fa', 'mouse']"
                 size="sm"
-            /></a>
+              />
+            </p>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm rep-column-left">
+          <div class="col-sm col-md-6 rep-column-left">
             <p class="title title-left text-left">Created At</p>
             <p class="text text-left">{{ convertDate(rep.created_at) }}</p>
           </div>
-          <div class="col-sm rep-column-middle">
+          <div class="col-sm col-md-6 rep-column-middle">
             <p class="title title-middle text-center">Last Update</p>
             <p class="text text-center">
               {{ convertDateRelative(rep.updated_at) }}
             </p>
           </div>
-          <div class="col-sm rep-column-right">
+          <div class="col-sm col-md-6 rep-column-right">
             <p class="title title-right text-right">Number of Issues</p>
             <p class="text text-right">{{ rep.open_issues_count }}</p>
           </div>

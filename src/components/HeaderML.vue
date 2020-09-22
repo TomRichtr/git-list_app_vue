@@ -16,6 +16,8 @@
             ? 'marked'
             : settedOption === 'reps'
             ? 'disabled'
+            : settedOption === 'about'
+            ? 'disabled'
             : '',
         ]"
       >
@@ -29,6 +31,8 @@
             ? 'marked'
             : settedOption === 'reps'
             ? 'disabled'
+            : settedOption === 'about'
+            ? 'disabled'
             : '',
         ]"
       >
@@ -41,6 +45,8 @@
           settedOption === 'issues'
             ? 'marked'
             : settedOption === 'reps'
+            ? 'disabled'
+            : settedOption === 'about'
             ? 'disabled'
             : '',
         ]"
@@ -72,48 +78,58 @@ export default {
   },
   methods: {
     goToRepositories() {
-      this.$router.push({
-        name: "RepsPage",
-      });
+      this.$router
+        .push({
+          name: "RepsPage",
+        })
+        .catch(() => {});
       this.$store.dispatch("setHeaderOption", "reps");
     },
     goToBranches() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "BranchesPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "BranchesPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "branches");
       }
     },
     goToCommits() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "CommitsPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "CommitsPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "commits");
       }
     },
     goToIssues() {
-      if (this.settedOption === "reps") {
+      if (this.settedOption === "reps" || this.settedOption === "about") {
         return;
       } else {
-        this.$router.push({
-          name: "IssuesPage",
-          params: { id: this.$store.getters.repIdGetter },
-        });
+        this.$router
+          .push({
+            name: "IssuesPage",
+            params: { id: this.$store.getters.repIdGetter },
+          })
+          .catch(() => {});
         this.$store.dispatch("setHeaderOption", "issues");
       }
     },
     goToAbout() {
-      this.$router.push({
-        name: "AboutPage",
-      });
+      this.$router
+        .push({
+          name: "AboutPage",
+        })
+        .catch(() => {});
       this.$store.dispatch("setHeaderOption", "about");
     },
   },

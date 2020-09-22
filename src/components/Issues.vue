@@ -7,54 +7,51 @@
       :key="issue.id"
       v-for="(issue, i) in issues"
     >
-      <div class="issue-wrapper-link">
-        <div class="row">
-          <div class="col-sm issue-column-left">
-            <p class="title title-left text-left">Title</p>
-            <a
-              class="text text-link text-left"
-              :title="issue.title"
-              :href="issue.html_url"
-              >{{ convertStringTitle(issue.title) }}
-
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-            /></a>
-          </div>
-          <div class="col-sm issue-column-middle">
-            <p class="title title-right text text-center">Body</p>
-            <p class="text text text-center" :title="issue.body">
-              {{ convertStringDescription(issue.body) }}
-            </p>
-          </div>
-          <div class="col-sm issue-column-right">
-            <p class="title title-right text-right">Filled by</p>
-            <a class="text text-link text-right" :href="issue.user.html_url"
-              >{{ issue.user.login }}
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-            /></a>
-          </div>
+      <div class="row issue-wrapper-link">
+        <div class="col-sm-6 col-md-4 col-lg-4 title-issue">
+          <p class="title">Title</p>
+          <a
+            class="text"
+            :title="issue.title"
+            :href="issue.html_url"
+            target="_blank"
+            >{{ convertStringTitle(issue.title) }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+          /></a>
         </div>
-        <div class="row">
-          <div class="col-sm issue-column-left">
-            <p class="title title-left text-left">Created At</p>
-            <p class="text text-left">{{ convertDate(issue.created_at) }}</p>
-          </div>
-          <div class="col-sm issue-column-middle">
-            <p class="title title-middle text-center">Last Update</p>
-            <p class="text text-center">
-              {{ convertDateRelative(issue.updated_at) }}
-            </p>
-          </div>
-          <div class="col-sm issue-column-right">
-            <p class="title title-right text-right">State</p>
-            <p class="text text-right">{{ convertString(issue.state) }}</p>
-          </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 body">
+          <p class="title">Body</p>
+          <p class="text" :title="issue.body">
+            {{ convertStringDescription(issue.body) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 filled-by">
+          <p class="title">Filled by</p>
+          <a class="text" :href="issue.user.html_url" target="_blank"
+            >{{ issue.user.login }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+          /></a>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4 created-at">
+          <p class="title">Created At</p>
+          <p class="text">{{ convertDate(issue.created_at) }}</p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 last-update">
+          <p class="title">Last Update</p>
+          <p class="text">
+            {{ convertDateRelative(issue.updated_at) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 state">
+          <p class="title">State</p>
+          <p class="text">{{ convertString(issue.state) }}</p>
         </div>
       </div>
     </div>
@@ -116,7 +113,7 @@ export default {
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -131,7 +128,7 @@ export default {
 .issue-column-right {
   align-items: right;
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
@@ -142,7 +139,7 @@ export default {
 .issue-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
@@ -176,22 +173,23 @@ export default {
   margin: 0px;
   padding: 0px;
   color: $secondary;
+  white-space: nowrap;
 }
 .text-left {
   text-align: left;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
 .text-center {
   text-align: center;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
 .text-right {
   text-align: right;
-  @media (max-width: $breakpoint-m) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
@@ -201,5 +199,56 @@ export default {
   padding: 0px;
   color: $dark;
   font-weight: bold;
+}
+.title-issue {
+  text-align: left;
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.created-at {
+  text-align: left;
+  @media (max-width: $md) {
+    text-align: right !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+.body {
+  text-align: center;
+  @media (max-width: $md) {
+    text-align: right !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+.last-update {
+  text-align: center;
+  @media (max-width: $md) {
+    text-align: left !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.filled-by {
+  text-align: right;
+  @media (max-width: $md) {
+    text-align: left !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.state {
+  text-align: right;
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
 }
 </style>

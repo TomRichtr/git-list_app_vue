@@ -21,5 +21,8 @@ export default {
 
 .header-wrapper {
   border-bottom: solid 1px $dark;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

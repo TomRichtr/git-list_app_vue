@@ -198,7 +198,7 @@ export default {
   background-color: darken($color: $primary, $amount: 15%);
 }
 .hidden-l {
-  @media (min-width: $breakpoint-s + 1) {
+  @media (min-width: $sm) {
     display: none !important;
   }
 }
@@ -212,7 +212,6 @@ export default {
   padding: $xs-size;
   align-content: space-between;
   &:hover {
-    cursor: pointer;
     background: $danger;
   }
 }

@@ -8,57 +8,49 @@
       v-for="(rep, i) in reps"
       @click="goToRepDetail(rep.id, rep.name)"
     >
-      <div class="rep-wrapper-link">
-        <div class="row">
-          <div class="col-sm col-md-6 rep-column-left">
-            <p class="title title-left text-left">Name / Language</p>
-            <p
-              class="text text-link text-left"
-              :title="rep.name"
-              :href="rep.svn_url"
-            >
-              {{ convertStringTitle(rep.name) }} {{ slashCheck(rep.language) }}
-              {{ convertString(rep.language) }}
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-              />
-            </p>
-          </div>
-          <div class="col-sm col-md-6 rep-column-middle">
-            <p class="title title-right text text-center">Description</p>
-            <p class="text text text-center" :title="rep.description">
-              {{ convertStringDescription(rep.description) }}
-            </p>
-          </div>
-          <div class="col-sm col-md-6 rep-column-right">
-            <p class="title title-right text-right">Created By</p>
-            <p class="text text-link text-right" :href="rep.owner.html_url">
-              {{ rep.owner.login }}
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-              />
-            </p>
-          </div>
+      <div class="row rep-wrapper-link">
+        <div class="col-sm-6 col-md-4 col-lg-4 name">
+          <p class="title">Name / Language</p>
+          <a class="text" :title="rep.name" :href="rep.svn_url" target="_blank">
+            {{ convertStringTitle(rep.name) }} {{ slashCheck(rep.language) }}
+            {{ convertString(rep.language) }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+            />
+          </a>
         </div>
-        <div class="row">
-          <div class="col-sm col-md-6 rep-column-left">
-            <p class="title title-left text-left">Created At</p>
-            <p class="text text-left">{{ convertDate(rep.created_at) }}</p>
-          </div>
-          <div class="col-sm col-md-6 rep-column-middle">
-            <p class="title title-middle text-center">Last Update</p>
-            <p class="text text-center">
-              {{ convertDateRelative(rep.updated_at) }}
-            </p>
-          </div>
-          <div class="col-sm col-md-6 rep-column-right">
-            <p class="title title-right text-right">Number of Issues</p>
-            <p class="text text-right">{{ rep.open_issues_count }}</p>
-          </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 description">
+          <p class="title">Description</p>
+          <p class="text" :title="rep.description">
+            {{ convertStringDescription(rep.description) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 created-by">
+          <p class="title">Created By</p>
+          <a class="text" :href="rep.owner.html_url" target="_blank">
+            {{ rep.owner.login }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+            />
+          </a>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 created-at">
+          <p class="title">Created At</p>
+          <p class="text">{{ convertDate(rep.created_at) }}</p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 last-update">
+          <p class="title">Last Update</p>
+          <p class="text">
+            {{ convertDateRelative(rep.updated_at) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 number-of-issues">
+          <p class="title">Number of Issues</p>
+          <p class="text">{{ rep.open_issues_count }}</p>
         </div>
       </div>
     </div>
@@ -171,7 +163,7 @@ export default {
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -185,38 +177,11 @@ export default {
   width: 100%;
   height: 100%;
   background: none;
-  padding: 0px;
+  padding: $xs-size;
   margin: 0px;
   border: none;
 }
-.text-link {
-  display: inline-block;
-}
-.rep-column-right {
-  align-items: right;
-  text-align: right;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.rep-column-left {
-  align-items: left;
-  text-align: left;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-link.text-right {
-  align-items: right;
-  align-self: right;
-}
-.rep-wrapper {
-  width: 100%;
-  padding: $xs-size;
-  background: $primary;
-  border-left-width: $xs-size;
-  border-left-style: solid;
-}
+
 .even-rep-wrapper {
   background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
@@ -241,31 +206,66 @@ export default {
   margin: 0px;
   padding: 0px;
   color: $secondary;
+  white-space: nowrap;
 }
-.text-left {
-  text-align: left;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-center {
-  text-align: center;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-right {
-  text-align: right;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
+
 .title {
   font-size: $xs-size;
   margin: 0px;
   padding: 0px;
   color: $dark;
   font-weight: bold;
+}
+.name {
+  text-align: left;
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.created-at {
+  text-align: left;
+  @media (max-width: $md) {
+    text-align: right !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+.description {
+  text-align: center;
+  @media (max-width: $md) {
+    text-align: right !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+.last-update {
+  text-align: center;
+  @media (max-width: $md) {
+    text-align: left !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.created-by {
+  text-align: right;
+  @media (max-width: $md) {
+    text-align: left !important;
+  }
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+
+.number-of-issues {
+  text-align: right;
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
 }
 
 .javascript {

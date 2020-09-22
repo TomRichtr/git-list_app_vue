@@ -1,9 +1,11 @@
+//sizes
 $xs-size: 0.6rem;
 $s-size: 1.2rem;
 $m-size: 1.8rem;
 $l-size: 2.4rem;
 $xl-size: 3rem;
 
+//colors
 $primary: #e3e3e3;
 $danger: #ff8c8c;
 $secondary: #283845;
@@ -13,6 +15,9 @@ $success: #178600;
 $info: #438eff;
 $warning: #701516;
 
-$breakpoint-s: 575px;
-$breakpoint-m: 720px;
-$breakpoint-l: 960px;
+//break-points
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;

@@ -7,53 +7,39 @@
       :key="commit.sha"
       v-for="(commit, i) in commits"
     >
-      <div class="issue-wrapper-link">
-        <div class="row">
-          <div class="col-sm issue-column-left">
-            <p class="title title-left text-left">Commited By</p>
-            <a
-              :href="`mailto:' + commit.commit.author.email`"
-              class="text text-link text-left"
-            >
-              {{ commit.commit.author.name }}
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-            /></a>
-          </div>
-          <div class="col-sm issue-column-center">
-            <p class="title title-right text text-center">Message</p>
-            <p class="text text text-center" :title="commit.commit.message">
-              {{ convertStringTitle(commit.commit.message) }}
-            </p>
-          </div>
-          <div class="col-sm issue-column-right">
-            <p class="title title-right text-right">User ID</p>
-            <a class="text text-link text-right" :href="commit.html_url"
-              >{{ commit.author.login }}
-              <font-awesome-icon
-                class="link-marker"
-                :icon="['fa', 'mouse']"
-                size="sm"
-            /></a>
-          </div>
+      <div class="row issue-wrapper-link">
+        <div class="col-sm-6 col-md-6 col-lg-6 commited-by">
+          <p class="title">Commited By</p>
+          <p
+            :href="`mailto:' + commit.commit.author.email`"
+            class="text"
+            target="_blank"
+          >
+            {{ commit.commit.author.name }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+            />
+          </p>
         </div>
-        <div class="row">
-          <div class="col-sm issue-column-left">
-            <p class="title title-left text-left">Commited at</p>
-            <p class="text text-left">
-              {{ convertDate(commit.commit.author.date) }}
-            </p>
-          </div>
-          <div class="col-sm issue-column-center">
-            <p class="title title-center text-center"></p>
-            <p class="text text-center"></p>
-          </div>
-          <div class="col-sm issue-column-right">
-            <p class="title title-right text-right">Comments Count</p>
-            <p class="text text-right">{{ commit.commit.comment_count }}</p>
-          </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 message">
+          <p class="title">Message</p>
+          <p class="text" :title="commit.commit.message">
+            {{ convertStringTitle(commit.commit.message) }}
+          </p>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 commited-at">
+          <p class="title">Commited at</p>
+          <p class="text">
+            {{ convertDate(commit.commit.author.date) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 comments-count">
+          <p class="title">Comments Count</p>
+          <p class="text">{{ commit.commit.comment_count }}</p>
         </div>
       </div>
     </div>
@@ -96,7 +82,7 @@ export default {
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -108,24 +94,7 @@ export default {
 .text-link {
   display: inline-block;
 }
-.issue-column-right {
-  align-items: right;
-  text-align: right;
-  @media (max-width: $breakpoint-m) {
-    text-align: center !important;
-  }
-}
-.issue-column-left {
-  align-items: left;
-  text-align: left;
-  @media (max-width: $breakpoint-s) {
-    text-align: center !important;
-  }
-}
-.text-link.text-right {
-  align-items: right;
-  align-self: right;
-}
+
 .issue-wrapper {
   width: 100%;
   padding: $xs-size;
@@ -156,22 +125,29 @@ export default {
   margin: 0px;
   padding: 0px;
   color: $secondary;
+  white-space: nowrap;
 }
-.text-left {
+.commited-by {
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
-.text-center {
-  text-align: center;
-  @media (max-width: $breakpoint-s) {
+.commited-at {
+  text-align: left;
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
-.text-right {
+.comments-count {
   text-align: right;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
+    text-align: center !important;
+  }
+}
+.message {
+  text-align: right;
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }

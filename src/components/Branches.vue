@@ -64,7 +64,7 @@ export default {
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }
@@ -83,7 +83,7 @@ export default {
 .issue-column-left {
   align-items: left;
   text-align: left;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     text-align: center !important;
   }
 }
@@ -118,6 +118,7 @@ export default {
   padding: 0px;
   color: $dark;
   text-align: center;
+  white-space: nowrap;
 }
 
 .title {

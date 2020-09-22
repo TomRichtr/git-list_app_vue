@@ -140,7 +140,7 @@ export default {
 @import "../../scss/variables.scss";
 
 .hidden-s {
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     display: none !important;
   }
 }
@@ -156,7 +156,6 @@ export default {
   align-content: space-between;
   background-color: darken($color: $primary, $amount: 15%);
   &:hover {
-    cursor: pointer;
     background: $danger;
   }
 }

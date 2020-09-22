@@ -52,7 +52,7 @@ export default {};
   height: 15%;
   width: 15%;
   border-radius: $l-size;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $m-size;
     margin-bottom: $s-size;
   }
@@ -65,7 +65,7 @@ export default {};
   width: 100%;
   height: 100vh;
   margin-top: $l-size * 1.1;
-  @media (max-width: $breakpoint-s) {
+  @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }

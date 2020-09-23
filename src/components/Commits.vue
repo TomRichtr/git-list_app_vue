@@ -10,7 +10,7 @@
       <div class="row issue-wrapper-link">
         <div class="col-sm-6 col-md-6 col-lg-6 commited-by">
           <p class="title">Commited By</p>
-          <p
+          <a
             :href="`mailto:' + commit.commit.author.email`"
             class="text"
             target="_blank"
@@ -21,7 +21,7 @@
               :icon="['fa', 'mouse']"
               size="sm"
             />
-          </p>
+          </a>
         </div>
 
         <div class="col-sm-6 col-md-6 col-lg-6 message">

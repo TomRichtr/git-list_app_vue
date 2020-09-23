@@ -11,7 +11,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6 commited-by">
           <p class="title">Commited By</p>
           <a
-            :href="`mailto:' + commit.commit.author.email`"
+            :href="`mailto: ${commit.commit.author.email}`"
             class="text"
             target="_blank"
           >

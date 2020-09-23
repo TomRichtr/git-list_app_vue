@@ -36,7 +36,7 @@ export default new Vuex.Store({
     issues: [],
     repName: "",
     id: "",
-    option: "rep",
+    option: "reps",
   },
   mutations: {
     storeReps(state, repsList) {

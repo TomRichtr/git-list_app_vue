@@ -8,10 +8,7 @@ Vue.use(Vuex);
 
 const vuexCookie = new VuexPersistence({
   restoreState: (key) => Cookies.getJSON(key),
-  saveState: (key, state) =>
-    Cookies.set(key, state, {
-      expires: 1,
-    }),
+  saveState: (key, state) => Cookies.set(key, state),
   reducer: (state) => ({
     repName: state.repName,
     id: state.id,
@@ -19,8 +16,8 @@ const vuexCookie = new VuexPersistence({
   }),
 });
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
+const vuexSession = new VuexPersistence({
+  storage: window.sessionStorage,
   reducer: (state) => ({
     repName: state.repName,
     id: state.id,
@@ -132,5 +129,5 @@ export default new Vuex.Store({
       return state.option;
     },
   },
-  plugins: [vuexCookie.plugin, vuexLocal.plugin],
+  plugins: [vuexCookie.plugin, vuexSession.plugin],
 });

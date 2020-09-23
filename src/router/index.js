@@ -20,13 +20,6 @@ const routes = [
     path: "/:id/commits",
     name: "CommitsPage",
     component: CommitsPage,
-    beforeEnter(to, from, next) {
-      if (store.state.repName != "") {
-        next();
-      } else {
-        next("/");
-      }
-    },
   },
   {
     path: "/:id/branches",

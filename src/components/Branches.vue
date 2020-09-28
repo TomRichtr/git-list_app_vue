@@ -2,37 +2,33 @@
   <div class="main-wrapper">
     <div
       :class="checkEven(i)"
-      class="branch-wrapper"
+      class="item-wrapper row"
       :id="branch.commit.sha"
       :key="branch.commit.sha"
       v-for="(branch, i) in branches"
     >
-      <div class="branch-wrapper-link">
-        <div class="row">
-          <div class="col-sm branch-column-left">
-            <p class="title">
-              Name
-            </p>
-            <p class="text">{{ convertStringTitle(branch.name) }}</p>
-          </div>
-          <div class="col-sm branch-column-right">
-            <p class="title">Protection Status</p>
-            <p class="text">
-              {{ convertProctectionStatus(branch.protected) }}
-            </p>
-          </div>
-        </div>
+      <div class="col-sm">
+        <p class="title">
+          Name
+        </p>
+        <p class="text">{{ convertStringTitle(branch.name) }}</p>
+      </div>
+      <div class="col-sm">
+        <p class="title">Protection Status</p>
+        <p class="text">
+          {{ convertProctectionStatus(branch.protected) }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import {
-  convertStringTitle,
-  convertProctectionStatus,
   checkEven,
+  convertProctectionStatus,
+  convertStringTitle,
 } from "../utilities";
 
 export default {
@@ -44,9 +40,9 @@ export default {
   },
   methods: {
     ...mapActions({ fetchBranches: "fetchBranches" }),
+    checkEven: checkEven,
     convertProctectionStatus: convertProctectionStatus,
     convertStringTitle: convertStringTitle,
-    checkEven: checkEven,
   },
   created() {
     this.fetchBranches(this.repositoryName);
@@ -58,72 +54,39 @@ export default {
 @import "../../scss/variables.scss";
 
 .main-wrapper {
-  width: 100%;
-  height: 100vh;
   margin-top: $l-size * 1.1;
   @media (max-width: $sm) {
     margin-top: $l-size * 1.3;
   }
 }
-.link-marker {
-  margin-left: $xs-size/5;
-  color: $dark;
-}
-.text-link {
-  display: inline-block;
-}
-.branch-column-right {
-  align-items: right;
-  text-align: right;
-}
-
-.issue-column-left {
-  align-items: left;
-  text-align: left;
-  @media (max-width: $sm) {
-    text-align: center !important;
-  }
-}
-.branch-wrapper {
-  width: 100%;
+.item-wrapper {
+  border-left: solid $info $m-size;
   padding: $xs-size;
-  background: $primary;
-  border-left-width: $xs-size;
-  border-left-style: solid;
-  border-left-color: $info;
+  transition: background 1s ease, border 0.5s ease;
+  &:hover {
+    background-color: $danger;
+    border-left-width: $xl-size;
+  }
 }
 .even-wrapper {
   background-color: $primary;
-  transition: background 1s ease, border 0.5s ease;
-  &:hover {
-    text-decoration: none;
-    background-color: $danger;
-    border-left-width: $xl-size;
-  }
 }
 .odd-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
-  transition: background 1s ease, border 0.5s ease;
-  &:hover {
-    text-decoration: none;
-    background-color: $danger;
-    border-left-width: $xl-size;
-  }
 }
 .text {
-  margin: 0px;
-  padding: 0px;
   color: $dark;
+  margin: 0;
+  padding: 0;
   text-align: center;
   white-space: nowrap;
 }
-
 .title {
-  font-size: $xs-size;
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
   color: $dark;
+  font-size: $xs-size;
   font-weight: bold;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 </style>

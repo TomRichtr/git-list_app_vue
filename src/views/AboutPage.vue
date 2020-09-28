@@ -7,7 +7,7 @@
         <div class="row personal-photo-wrapper">
           <img
             class="personal-photo"
-            src="../Assets/perfonal-foto.jpg"
+            src="../assets/personal-photo.jpg"
             alt="personal photograph"
           />
         </div>

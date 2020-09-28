@@ -9,6 +9,15 @@
     </div>
     <transition name="slide">
       <div class="header-wrapper-uncollapsed " v-if="collapsed">
+        <div class="option-wrapper">
+          <input
+            type="text"
+            class="user-name-input"
+            placeholder="Enter username"
+            v-model="userName"
+            v-on:keyup="fetchRepositoriesOnCommand"
+          />
+        </div>
         <div
           @click="goToRepositories"
           class="option-wrapper repositories"
@@ -61,11 +70,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   data() {
-    return { collapsed: false };
+    return { collapsed: false, userName: this.getUserName };
   },
   computed: {
     ...mapGetters({
@@ -74,9 +83,26 @@ export default {
     }),
   },
   methods: {
+    ...mapActions({
+      fetchRepositoriesOnUsersChange: "fetchRepositoriesOnUsersChange",
+    }),
     ...mapMutations({
       setHeaderOption: "setHeaderOption",
+      setRepositories: "setRepositories",
     }),
+    fetchRepositoriesOnCommand() {
+      if (this.userName === "") {
+        this.setRepositories(null);
+      } else {
+        this.fetchRepositoriesOnUsersChange(this.userName);
+      }
+      this.$router
+        .push({
+          name: "RepositoriesPage",
+        })
+        .catch(() => {});
+      this.setHeaderOption("repositories");
+    },
     openNavBarOnClick() {
       this.collapsed = !this.collapsed;
     },
@@ -137,6 +163,17 @@ export default {
 
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
+
+input {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+}
 
 .slide-enter-active {
   -moz-transition-duration: 1s;

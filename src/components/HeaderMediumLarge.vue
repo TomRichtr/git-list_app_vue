@@ -89,7 +89,6 @@ export default {
       } else {
         this.fetchRepositoriesOnUsersChange(this.userName);
       }
-      this.fetchRepositoriesOnUsersChange(this.userName);
       this.goToRepositories();
     },
     goToRepositories() {

@@ -7,126 +7,111 @@ import { githubAxiosInstance, gitHubUser } from "../axios";
 Vue.use(Vuex);
 
 const vuexCookie = new VuexPersistence({
-  restoreState: (key) => Cookies.getJSON(key),
+  resetState: (key) => Cookies.getJSON(key),
   saveState: (key, state) => Cookies.set(key, state),
   reducer: (state) => ({
-    repName: state.repName,
-    id: state.id,
-    option: state.option,
+    repositoryName: state.repositoryName,
+    repositoryId: state.repositoryId,
+    headerOption: state.headerOption,
   }),
 });
 
 const vuexSession = new VuexPersistence({
   storage: window.sessionStorage,
   reducer: (state) => ({
-    repName: state.repName,
-    id: state.id,
-    option: state.option,
+    repositoryName: state.repositoryName,
+    repositoryId: state.repositoryId,
+    headerOption: state.headerOption,
   }),
 });
 
 export default new Vuex.Store({
   state: {
-    reps: [],
+    repositories: [],
     branches: [],
     commits: [],
     issues: [],
-    repName: "",
-    id: "",
-    option: "reps",
+    repositoryName: "",
+    repositoryId: 0,
+    headerOption: "repository",
   },
   mutations: {
-    storeReps(state, repsList) {
-      state.reps = repsList;
+    setRepositories(state, repositories) {
+      state.repositories = repositories;
     },
-    storeBranches(state, branchesList) {
-      state.branches = branchesList;
+    setBranches(state, branches) {
+      state.branches = branches;
     },
-    storeCommits(state, commitsList) {
-      state.commits = commitsList;
+    setCommits(state, commits) {
+      state.commits = commits;
     },
-    storeIssues(state, issuesList) {
-      state.issues = issuesList;
+    setIssues(state, issues) {
+      state.issues = issues;
     },
-    storeRepName(state, repName) {
-      state.repName = repName;
+    setRepositoryNameAndId(state, payload) {
+      state.repositoryName = payload.repositoryName;
+      state.repositoryId = payload.repositoryId;
     },
-    storeId(state, id) {
-      state.id = id;
-    },
-    storeHeaderOption(state, option) {
-      state.option = option;
+    setHeaderOption(state, headerOption) {
+      state.headerOption = headerOption;
     },
   },
   actions: {
-    setHeaderOption({ commit }, option) {
-      commit("storeHeaderOption", option);
-    },
-    setStateRepName({ commit }, IdAndRepName) {
-      commit("storeRepName", IdAndRepName.repName);
-      commit("storeId", IdAndRepName.id);
-    },
-    fetchReps({ commit }) {
+    fetchRepositories({ commit }) {
       githubAxiosInstance
         .get(`users/${gitHubUser}/repos`)
         .then((res) => {
-          commit("storeReps", res.data);
+          commit("setRepositories", res.data);
+        })
+        //error message
+        .catch((error) => console.log(error));
+    },
+    fetchCommits({ commit }, repositoryName) {
+      githubAxiosInstance
+        .get(`repos/${gitHubUser}/${repositoryName}/commits?per_page=10`)
+        .then((res) => {
+          commit("setCommits", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchCommits({ commit }, repName) {
+    fetchBranches({ commit }, repositoryName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repName}/commits`)
+        .get(`repos/${gitHubUser}/${repositoryName}/branches`)
         .then((res) => {
-          const commitsSorted = res.data.sort((a, b) => {
-            return Date.parse(a.commit.author.date) >
-              Date.parse(b.commit.author.date)
-              ? -1
-              : 1;
-          });
-          const commitsSliced = commitsSorted.slice(0, 10);
-          commit("storeCommits", commitsSliced);
+          commit("setBranches", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchBranches({ commit }, repName) {
+    fetchIssues({ commit }, repositoryName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repName}/branches`)
+        .get(`repos/${gitHubUser}/${repositoryName}/issues`)
         .then((res) => {
-          commit("storeBranches", res.data);
-        })
-        .catch((error) => console.log(error));
-    },
-    fetchIssues({ commit }, repName) {
-      githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repName}/issues`)
-        .then((res) => {
-          commit("storeIssues", res.data);
+          commit("setIssues", res.data);
         })
         .catch((error) => console.log(error));
     },
   },
   getters: {
-    repsGetter: (state) => {
-      return state.reps;
+    getRepositories: (state) => {
+      return state.repositories;
     },
-    branchesGetter: (state) => {
+    getBranches: (state) => {
       return state.branches;
     },
-    commitsGetter: (state) => {
+    getCommits: (state) => {
       return state.commits;
     },
-    issuesGetter: (state) => {
+    getIssues: (state) => {
       return state.issues;
     },
-    repNameGetter: (state) => {
-      return state.repName;
+    getRepositoryName: (state) => {
+      return state.repositoryName;
     },
-    repIdGetter: (state) => {
-      return state.id;
+    getRepositoryId: (state) => {
+      return state.repositoryId;
     },
-    headerOptionGetter: (state) => {
-      return state.option;
+    getHeaderOption: (state) => {
+      return state.headerOption;
     },
   },
   plugins: [vuexCookie.plugin, vuexSession.plugin],

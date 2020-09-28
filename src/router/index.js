@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import RepsPage from "../views/RepsPage";
+import RepositoriesPage from "../views/RepositoriesPage";
 import BranchesPage from "../views/BranchesPage";
 import CommitsPage from "../views/CommitsPage";
 import IssuesPage from "../views/IssuesPage";
@@ -13,20 +13,20 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "RepsPage",
-    component: RepsPage,
+    name: "RepositoriesPage",
+    component: RepositoriesPage,
   },
   {
-    path: "/:id/commits",
+    path: "/:repositoryId/commits",
     name: "CommitsPage",
     component: CommitsPage,
   },
   {
-    path: "/:id/branches",
+    path: "/:repositoryId/branches",
     name: "BranchesPage",
     component: BranchesPage,
     beforeEnter(to, from, next) {
-      if (store.state.repName != "") {
+      if (store.state.repositoryName != "") {
         next();
       } else {
         next("/");
@@ -34,11 +34,11 @@ const routes = [
     },
   },
   {
-    path: "/:id/issues",
+    path: "/:repositoryId/issues",
     name: "IssuesPage",
     component: IssuesPage,
     beforeEnter(to, from, next) {
-      if (store.state.repName != "") {
+      if (store.state.repositoryName != "") {
         next();
       } else {
         next("/");

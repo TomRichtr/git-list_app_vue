@@ -1,4 +1,5 @@
 <template>
+  <!-- headerSmall -->
   <div class="main-wrapper hidden-l">
     <div
       class="header-wrapper"
@@ -11,8 +12,8 @@
       <div class="header-wrapper-uncollapsed " v-if="collapsed">
         <div
           @click="goToRepositories"
-          class="option-wrapper reps"
-          :class="[settedOption === 'reps' ? 'marked' : '']"
+          class="option-wrapper repositories"
+          :class="[headerOption === 'repositories' ? 'marked' : '']"
         >
           Repositories
         </div>
@@ -20,11 +21,11 @@
           @click="goToCommits"
           class="option-wrapper commits"
           :class="[
-            settedOption === 'commits'
+            headerOption === 'commits'
               ? 'marked'
-              : settedOption === 'reps'
+              : headerOption === 'repositories'
               ? 'disabled'
-              : settedOption === 'about'
+              : headerOption === 'about'
               ? 'disabled'
               : '',
           ]"
@@ -35,11 +36,11 @@
           @click="goToBranches"
           class="option-wrapper branches"
           :class="[
-            settedOption === 'branches'
+            headerOption === 'branches'
               ? 'marked'
-              : settedOption === 'reps'
+              : headerOption === 'repositories'
               ? 'disabled'
-              : settedOption === 'about'
+              : headerOption === 'about'
               ? 'disabled'
               : '',
           ]"
@@ -50,11 +51,11 @@
           @click="goToIssues"
           class="option-wrapper issues"
           :class="[
-            settedOption === 'issues'
+            headerOption === 'issues'
               ? 'marked'
-              : settedOption === 'reps'
+              : headerOption === 'repositories'
               ? 'disabled'
-              : settedOption === 'about'
+              : headerOption === 'about'
               ? 'disabled'
               : '',
           ]"
@@ -65,7 +66,7 @@
         <div
           @click="goToAbout"
           class="option-wrapper about"
-          :class="[settedOption === 'about' ? 'marked' : '']"
+          :class="[headerOption === 'about' ? 'marked' : '']"
         >
           About
         </div>
@@ -75,68 +76,82 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   data() {
     return { collapsed: false };
   },
-  created() {},
   computed: {
-    settedOption() {
-      return this.$store.getters.headerOptionGetter;
-    },
+    ...mapGetters({
+      repositoryId: "getRepositoryId",
+      headerOption: "getHeaderOption",
+    }),
   },
   methods: {
+    ...mapMutations({
+      setHeaderOption: "setHeaderOption",
+    }),
     openNavBarOnClick() {
       this.collapsed = !this.collapsed;
     },
     goToRepositories() {
       this.$router
         .push({
-          name: "RepsPage",
+          name: "RepositoriesPage",
         })
         .catch(() => {});
-      this.$store.dispatch("setHeaderOption", "reps");
+      this.setHeaderOption("repositories");
       this.collapsed = false;
     },
     goToBranches() {
-      if (this.settedOption === "reps" || this.settedOption === "about") {
+      if (
+        this.headerOption === "repositories" ||
+        this.headerOption === "about"
+      ) {
         return;
       } else {
         this.$router
           .push({
             name: "BranchesPage",
-            params: { id: this.$store.getters.repIdGetter },
+            params: { repositoryId: this.repositoryId },
           })
           .catch(() => {});
-        this.$store.dispatch("setHeaderOption", "branches");
+        this.setHeaderOption("branches");
         this.collapsed = false;
       }
     },
     goToCommits() {
-      if (this.settedOption === "reps" || this.settedOption === "about") {
+      if (
+        this.headerOption === "repositories" ||
+        this.headerOption === "about"
+      ) {
         return;
       } else {
         this.$router
           .push({
             name: "CommitsPage",
-            params: { id: this.$store.getters.repIdGetter },
+            params: { repositoryId: this.repositoryId },
           })
           .catch(() => {});
-        this.$store.dispatch("setHeaderOption", "commits");
+        this.setHeaderOption("commits");
         this.collapsed = false;
       }
     },
     goToIssues() {
-      if (this.settedOption === "reps" || this.settedOption === "about") {
+      if (
+        this.headerOption === "repositories" ||
+        this.headerOption === "about"
+      ) {
         return;
       } else {
         this.$router
           .push({
             name: "IssuesPage",
-            params: { id: this.$store.getters.repIdGetter },
+            params: { repositoryId: this.repositoryId },
           })
           .catch(() => {});
-        this.$store.dispatch("setHeaderOption", "issues");
+        this.setHeaderOption("issues");
         this.collapsed = false;
       }
     },
@@ -146,7 +161,7 @@ export default {
           name: "AboutPage",
         })
         .catch(() => {});
-      this.$store.dispatch("setHeaderOption", "about");
+      this.setHeaderOption("about");
       this.collapsed = false;
     },
   },

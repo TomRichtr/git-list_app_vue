@@ -12,7 +12,7 @@ export default {};
 
 <style scoped lang="scss">
 .container {
-  display: flex;
+  //solution to make table cell
   position: absolute;
   top: 50%;
   left: 50%;

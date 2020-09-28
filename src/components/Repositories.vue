@@ -1,19 +1,25 @@
 <template>
   <div class="main-wrapper">
     <div
-      :class="[checkEvenRep(i), checkLanguageRep(rep.language)]"
-      class="rep-wrapper"
-      :id="rep.id"
-      :key="rep.id"
-      v-for="(rep, i) in reps"
-      @click="goToRepDetail(rep.id, rep.name)"
+      :class="[checkEven(i), checkLanguageRepository(repository.language)]"
+      class="repository-wrapper"
+      :id="repository.id"
+      :key="repository.id"
+      v-for="(repository, i) in repositories"
+      @click="goToRepositoryDetail(repository.id, repository.name)"
     >
-      <div class="row rep-wrapper-link">
+      <div class="row repository-wrapper-link">
         <div class="col-sm-6 col-md-4 col-lg-4 name">
           <p class="title">Name / Language</p>
-          <a class="text" :title="rep.name" :href="rep.svn_url" target="_blank">
-            {{ convertStringTitle(rep.name) }} {{ slashCheck(rep.language) }}
-            {{ convertString(rep.language) }}
+          <a
+            class="text"
+            :title="repository.name"
+            :href="repository.svn_url"
+            target="_blank"
+          >
+            {{ convertStringTitle(repository.name) }}
+            {{ slashCheck(repository.language) }}
+            {{ convertString(repository.language) }}
             <font-awesome-icon
               class="link-marker"
               :icon="['fa', 'mouse']"
@@ -23,14 +29,14 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 description">
           <p class="title">Description</p>
-          <p class="text" :title="rep.description">
-            {{ convertStringDescription(rep.description) }}
+          <p class="text" :title="repository.description">
+            {{ convertStringDescription(repository.description) }}
           </p>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 created-by">
           <p class="title">Created By</p>
-          <a class="text" :href="rep.owner.html_url" target="_blank">
-            {{ rep.owner.login }}
+          <a class="text" :href="repository.owner.html_url" target="_blank">
+            {{ repository.owner.login }}
             <font-awesome-icon
               class="link-marker"
               :icon="['fa', 'mouse']"
@@ -40,17 +46,17 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 created-at">
           <p class="title">Created At</p>
-          <p class="text">{{ convertDate(rep.created_at) }}</p>
+          <p class="text">{{ convertDate(repository.created_at) }}</p>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 last-update">
           <p class="title">Last Update</p>
           <p class="text">
-            {{ convertDateRelative(rep.updated_at) }}
+            {{ convertDateRelative(repository.updated_at) }}
           </p>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 number-of-issues">
           <p class="title">Number of Issues</p>
-          <p class="text">{{ rep.open_issues_count }}</p>
+          <p class="text">{{ repository.open_issues_count }}</p>
         </div>
       </div>
     </div>
@@ -58,100 +64,50 @@
 </template>
 
 <script>
-import moment from "moment";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import {
+  convertDate,
+  convertDateRelative,
+  convertString,
+  slashCheck,
+  convertStringTitle,
+  convertStringDescription,
+  checkEven,
+  checkLanguageRepository,
+} from "../utilities";
 
 export default {
-  created() {
-    this.$store.dispatch("fetchReps");
-  },
   computed: {
-    reps() {
-      return this.$store.getters.repsGetter;
-    },
+    ...mapGetters({ repositories: "getRepositories" }),
   },
   methods: {
-    goToRepDetail(id, repName) {
+    ...mapMutations({
+      setRepositoryNameAndId: "setRepositoryNameAndId",
+      setHeaderOption: "setHeaderOption",
+    }),
+    ...mapActions({ fetchRepositories: "fetchRepositories" }),
+    convertDate: convertDate,
+    convertDateRelative: convertDateRelative,
+    convertString: convertString,
+    slashCheck: slashCheck,
+    convertStringTitle: convertStringTitle,
+    convertStringDescription: convertStringDescription,
+    checkEven: checkEven,
+    checkLanguageRepository: checkLanguageRepository,
+    goToRepositoryDetail(repositoryId, repositoryName) {
       this.$router.push({
         name: "CommitsPage",
-        params: { id: id },
+        params: { repositoryId: repositoryId },
       });
-      this.$store.dispatch("setStateRepName", { repName: repName, id: id });
-      this.$store.dispatch("setHeaderOption", "commits");
+      this.setRepositoryNameAndId({
+        repositoryName: repositoryName,
+        repositoryId: repositoryId,
+      });
+      this.setHeaderOption("commits");
     },
-    getRate() {
-      this.$store.dispatch("fetchRate");
-    },
-    convertDate(date) {
-      return moment(date).format("Do MMM YYYY, h:mm");
-    },
-    convertDateRelative(date) {
-      return moment(date).fromNow();
-    },
-    convertString(string) {
-      return string === null
-        ? ""
-        : string.charAt(0).toUpperCase() + string.slice(1);
-    },
-    slashCheck(language) {
-      return language === null ? "" : "/";
-    },
-    convertStringTitle(string) {
-      const stringAdjusted =
-        string === null ? "" : string.charAt(0).toUpperCase() + string.slice(1);
-      return stringAdjusted.length > 25
-        ? stringAdjusted.slice(0, 25) + "..."
-        : stringAdjusted;
-    },
-    convertStringDescription(string) {
-      const adjustedString =
-        string === null
-          ? ""
-          : string.charAt(0).toUpperCase() +
-            string.slice(1) +
-            (string.slice(-1) === "." ? "" : ".");
-      return adjustedString.length > 40
-        ? adjustedString.slice(0, 40) + "..."
-        : adjustedString;
-    },
-    checkEvenRep(i) {
-      return i % 2 === 0 ? "even-rep-wrapper" : "odd-rep-wrapper";
-    },
-    checkLanguageRep(language) {
-      switch (language) {
-        case "JavaScript":
-          return "javascript";
-        case "Python":
-          return "python";
-        case "Java":
-          return "java";
-        case "C++":
-          return "cplusplus";
-        case "C":
-          return "c";
-        case "PHP":
-          return "php";
-        case "C#":
-          return "chash";
-        case "Shell":
-          return "shell";
-        case "Go":
-          return "go";
-        case "TypeScript":
-          return "typescript";
-        case "Vue":
-          return "vue";
-        case "Ruby":
-          return "ruby";
-        case "Arduino":
-          return "arduiono";
-        case "Objective-C":
-          return "objective-c";
-        case "PLpgSQL":
-          return "plpgsql";
-        default:
-          return "undefined";
-      }
-    },
+  },
+  created() {
+    this.fetchRepositories();
   },
 };
 </script>
@@ -173,16 +129,16 @@ export default {
   color: $secondary;
 }
 
-.rep-wrapper-link {
+.repository-wrapper-link {
   width: 100%;
   height: 100%;
   background: none;
   padding: $xs-size;
-  margin: 0px;
+  margin: 0;
   border: none;
 }
-
-.even-rep-wrapper {
+//spoojit a zjednodusit
+.even-wrapper {
   background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
@@ -192,7 +148,7 @@ export default {
     cursor: pointer;
   }
 }
-.odd-rep-wrapper {
+.odd-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {
@@ -203,8 +159,8 @@ export default {
   }
 }
 .text {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   color: $secondary;
   white-space: nowrap;
 }

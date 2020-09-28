@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper">
     <div
-      :class="checkEvenIssue(i)"
+      :class="checkEven(i)"
       class="issue-wrapper"
       :id="commit.sha"
       :key="commit.sha"
@@ -47,31 +47,24 @@
 </template>
 
 <script>
-import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
+import { convertStringTitle, convertDate, checkEven } from "../utilities";
 
 export default {
-  created() {
-    this.$store.dispatch("fetchCommits", this.$store.getters.repNameGetter);
-  },
   computed: {
-    commits() {
-      return this.$store.getters.commitsGetter;
-    },
+    ...mapGetters({
+      commits: "getCommits",
+      repositoryName: "getRepositoryName",
+    }),
   },
   methods: {
-    checkEvenIssue(i) {
-      return i % 2 === 0 ? "even-issue-wrapper" : "odd-issue-wrapper";
-    },
-    convertStringTitle(string) {
-      const stringAdjusted =
-        string === null ? "" : string.charAt(0).toUpperCase() + string.slice(1);
-      return stringAdjusted.length > 25
-        ? stringAdjusted.slice(0, 25) + "..."
-        : stringAdjusted;
-    },
-    convertDate(date) {
-      return moment(date).format("Do MMM YYYY, h:mm");
-    },
+    ...mapActions({ fetchCommits: "fetchCommits" }),
+    convertStringTitle: convertStringTitle,
+    convertDate: convertDate,
+    checkEven: checkEven,
+  },
+  created() {
+    this.fetchCommits(this.repositoryName);
   },
 };
 </script>
@@ -103,7 +96,7 @@ export default {
   border-left-style: solid;
   border-left-color: $success;
 }
-.even-issue-wrapper {
+.even-wrapper {
   background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
@@ -112,7 +105,7 @@ export default {
     border-left-width: $xl-size;
   }
 }
-.odd-issue-wrapper {
+.odd-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {

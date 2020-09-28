@@ -1,12 +1,12 @@
 <template>
-  <div><Reps></Reps></div>
+  <div><Repositories></Repositories></div>
 </template>
 
 <script>
-import Reps from "../components/Reps";
+import Repositories from "../components/Repositories";
 export default {
   components: {
-    Reps,
+    Repositories,
   },
 };
 </script>

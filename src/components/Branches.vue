@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper">
     <div
-      :class="checkEvenBranch(i)"
+      :class="checkEven(i)"
       class="branch-wrapper"
       :id="branch.commit.sha"
       :key="branch.commit.sha"
@@ -28,31 +28,28 @@
 </template>
 
 <script>
-// import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
+import {
+  convertStringTitle,
+  convertProctectionStatus,
+  checkEven,
+} from "../utilities";
 
 export default {
-  created() {
-    this.$store.dispatch("fetchBranches", this.$store.getters.repNameGetter);
-  },
   computed: {
-    branches() {
-      return this.$store.getters.branchesGetter;
-    },
+    ...mapGetters({
+      branches: "getBranches",
+      repositoryName: "getRepositoryName",
+    }),
   },
   methods: {
-    checkEvenBranch(i) {
-      return i % 2 === 0 ? "even-branch-wrapper" : "odd-branch-wrapper";
-    },
-    convertStringTitle(string) {
-      const stringAdjusted =
-        string === null ? "" : string.charAt(0).toUpperCase() + string.slice(1);
-      return stringAdjusted.length > 25
-        ? stringAdjusted.slice(0, 25) + "..."
-        : stringAdjusted;
-    },
-    convertProctectionStatus(protection) {
-      return !protection ? "Not protected" : "Protected";
-    },
+    ...mapActions({ fetchBranches: "fetchBranches" }),
+    convertProctectionStatus: convertProctectionStatus,
+    convertStringTitle: convertStringTitle,
+    checkEven: checkEven,
+  },
+  created() {
+    this.fetchBranches(this.repositoryName);
   },
 };
 </script>
@@ -95,7 +92,7 @@ export default {
   border-left-style: solid;
   border-left-color: $info;
 }
-.even-branch-wrapper {
+.even-wrapper {
   background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
@@ -104,7 +101,7 @@ export default {
     border-left-width: $xl-size;
   }
 }
-.odd-branch-wrapper {
+.odd-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {

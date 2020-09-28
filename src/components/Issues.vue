@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper">
     <div
-      :class="checkEvenIssue(i)"
+      :class="checkEven(i)"
       class="issue-wrapper"
       :id="issue.id"
       :key="issue.id"
@@ -59,50 +59,34 @@
 </template>
 
 <script>
-import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
+import {
+  convertStringTitle,
+  convertDate,
+  checkEven,
+  convertDateRelative,
+  convertStringDescription,
+  convertString,
+} from "../utilities";
 
 export default {
-  created() {
-    this.$store.dispatch("fetchIssues", this.$store.getters.repNameGetter);
-  },
   computed: {
-    issues() {
-      return this.$store.getters.issuesGetter;
-    },
+    ...mapGetters({
+      issues: "getIssues",
+      repositoryName: "getRepositoryName",
+    }),
   },
   methods: {
-    checkEvenIssue(i) {
-      return i % 2 === 0 ? "even-issue-wrapper" : "odd-issue-wrapper";
-    },
-    convertStringTitle(string) {
-      const stringAdjusted =
-        string === null ? "" : string.charAt(0).toUpperCase() + string.slice(1);
-      return stringAdjusted.length > 25
-        ? stringAdjusted.slice(0, 25) + "..."
-        : stringAdjusted;
-    },
-    convertDate(date) {
-      return moment(date).format("Do MMM YYYY, h:mm");
-    },
-    convertDateRelative(date) {
-      return moment(date).fromNow();
-    },
-    convertStringDescription(string) {
-      const adjustedString =
-        string === null
-          ? ""
-          : string.charAt(0).toUpperCase() +
-            string.slice(1) +
-            (string.slice(-1) === "." ? "" : ".");
-      return adjustedString.length > 40
-        ? adjustedString.slice(0, 40) + "..."
-        : adjustedString;
-    },
-    convertString(string) {
-      return string === null
-        ? ""
-        : string.charAt(0).toUpperCase() + string.slice(1);
-    },
+    ...mapActions({ fetchIssues: "fetchIssues" }),
+    checkEven: checkEven,
+    convertStringTitle: convertStringTitle,
+    convertDate: convertDate,
+    convertDateRelative: convertDateRelative,
+    convertStringDescription: convertStringDescription,
+    convertString: convertString,
+  },
+  created() {
+    this.fetchIssues(this.repositoryName);
   },
 };
 </script>
@@ -151,7 +135,7 @@ export default {
   border-left-style: solid;
   border-left-color: $warning;
 }
-.even-issue-wrapper {
+.even-wrapper {
   background-color: $primary;
   transition: background 1s ease, border 0.5s ease;
   &:hover {
@@ -160,7 +144,7 @@ export default {
     border-left-width: $xl-size;
   }
 }
-.odd-issue-wrapper {
+.odd-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
   transition: background 1s ease, border 0.5s ease;
   &:hover {

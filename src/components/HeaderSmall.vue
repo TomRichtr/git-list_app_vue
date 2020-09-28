@@ -1,8 +1,7 @@
 <template>
-  <!-- headerSmall -->
-  <div class="main-wrapper hidden-l">
+  <nav class="main-wrapper hidden-medium">
     <div
-      class="header-wrapper"
+      class="header-wrapper main-wrapper hidden-medium"
       @click="openNavBarOnClick"
       :class="{ collapsed: collapsed }"
     >
@@ -25,8 +24,6 @@
               ? 'marked'
               : headerOption === 'repositories'
               ? 'disabled'
-              : headerOption === 'about'
-              ? 'disabled'
               : '',
           ]"
         >
@@ -39,8 +36,6 @@
             headerOption === 'branches'
               ? 'marked'
               : headerOption === 'repositories'
-              ? 'disabled'
-              : headerOption === 'about'
               ? 'disabled'
               : '',
           ]"
@@ -55,24 +50,14 @@
               ? 'marked'
               : headerOption === 'repositories'
               ? 'disabled'
-              : headerOption === 'about'
-              ? 'disabled'
               : '',
           ]"
         >
           Issues
         </div>
-
-        <div
-          @click="goToAbout"
-          class="option-wrapper about"
-          :class="[headerOption === 'about' ? 'marked' : '']"
-        >
-          About
-        </div>
       </div>
     </transition>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -105,10 +90,7 @@ export default {
       this.collapsed = false;
     },
     goToBranches() {
-      if (
-        this.headerOption === "repositories" ||
-        this.headerOption === "about"
-      ) {
+      if (this.headerOption === "repositories") {
         return;
       } else {
         this.$router
@@ -122,10 +104,7 @@ export default {
       }
     },
     goToCommits() {
-      if (
-        this.headerOption === "repositories" ||
-        this.headerOption === "about"
-      ) {
+      if (this.headerOption === "repositories") {
         return;
       } else {
         this.$router
@@ -139,10 +118,7 @@ export default {
       }
     },
     goToIssues() {
-      if (
-        this.headerOption === "repositories" ||
-        this.headerOption === "about"
-      ) {
+      if (this.headerOption === "repositories") {
         return;
       } else {
         this.$router
@@ -154,15 +130,6 @@ export default {
         this.setHeaderOption("issues");
         this.collapsed = false;
       }
-    },
-    goToAbout() {
-      this.$router
-        .push({
-          name: "AboutPage",
-        })
-        .catch(() => {});
-      this.setHeaderOption("about");
-      this.collapsed = false;
     },
   },
 };
@@ -212,7 +179,7 @@ export default {
 .main-wrapper {
   background-color: darken($color: $primary, $amount: 15%);
 }
-.hidden-l {
+.hidden-medium {
   @media (min-width: $sm) {
     display: none !important;
   }

@@ -1,5 +1,8 @@
 <template>
   <div class="main-wrapper">
+    <p class="no-repositories" v-if="repositoriesLength != false">
+      {{ repositoriesLength }}
+    </p>
     <div
       :class="checkEven(i)"
       class="row item-wrapper"
@@ -78,6 +81,9 @@ import colors from "../assets/colors.json";
 export default {
   computed: {
     ...mapGetters({ repositories: "getRepositories" }),
+    repositoriesLength() {
+      return this.repositories === null ? "No repositories to show" : false;
+    },
   },
   methods: {
     ...mapMutations({
@@ -118,6 +124,11 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.no-repositories {
+  margin-top: $xl-size * 1.3;
+  display: block;
+  text-align: center;
+}
 .main-wrapper {
   margin-top: $l-size * 1.1;
   @media (max-width: $sm) {
@@ -136,6 +147,7 @@ export default {
   &:hover {
     background-color: $danger;
     border-left-width: $xl-size;
+    cursor: pointer;
   }
 }
 .even-wrapper {

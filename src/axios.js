@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const gitHubToken = process.env.VUE_APP_GITHUB_API_TOKEN;
-export const gitHubUser = process.env.VUE_APP_GITHUB_USER;
 
 export const githubAxiosInstance = axios.create({
   baseURL: "https://api.github.com",

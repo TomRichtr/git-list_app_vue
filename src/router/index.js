@@ -4,7 +4,6 @@ import RepositoriesPage from "../views/RepositoriesPage";
 import BranchesPage from "../views/BranchesPage";
 import CommitsPage from "../views/CommitsPage";
 import IssuesPage from "../views/IssuesPage";
-import AboutPage from "../views/AboutPage";
 import NotFoundPage from "../views/NotFoundPage";
 import store from "../store/index";
 
@@ -45,11 +44,7 @@ const routes = [
       }
     },
   },
-  {
-    path: "/about",
-    name: "AboutPage",
-    component: AboutPage,
-  },
+
   {
     path: "*",
     name: "NotFoundPage",

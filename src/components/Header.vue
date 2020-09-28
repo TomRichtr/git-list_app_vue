@@ -1,17 +1,17 @@
 <template>
   <div class="fixed-top header-wrapper ">
-    <HeaderS></HeaderS>
-    <HeaderML></HeaderML>
+    <HeaderSmall></HeaderSmall>
+    <HeaderMediumLarge></HeaderMediumLarge>
   </div>
 </template>
 
 <script>
-import HeaderS from "./HeaderS";
-import HeaderML from "./HeaderML";
+import HeaderSmall from "./HeaderSmall";
+import HeaderMediumLarge from "./HeaderMediumLarge";
 export default {
   components: {
-    HeaderS,
-    HeaderML,
+    HeaderSmall,
+    HeaderMediumLarge,
   },
 };
 </script>

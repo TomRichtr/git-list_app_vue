@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersistence from "vuex-persist";
 import Cookies from "js-cookie";
-import { githubAxiosInstance, gitHubUser } from "../axios";
+import { githubAxiosInstance } from "../axios";
 
 Vue.use(Vuex);
 
@@ -13,6 +13,7 @@ const vuexCookie = new VuexPersistence({
     repositoryName: state.repositoryName,
     repositoryId: state.repositoryId,
     headerOption: state.headerOption,
+    userName: state.userName,
   }),
 });
 
@@ -22,6 +23,7 @@ const vuexSession = new VuexPersistence({
     repositoryName: state.repositoryName,
     repositoryId: state.repositoryId,
     headerOption: state.headerOption,
+    userName: state.userName,
   }),
 });
 
@@ -34,6 +36,7 @@ export default new Vuex.Store({
     repositoryName: "",
     repositoryId: 0,
     headerOption: "repository",
+    userName: "",
   },
   mutations: {
     setRepositories(state, repositories) {
@@ -55,36 +58,47 @@ export default new Vuex.Store({
     setHeaderOption(state, headerOption) {
       state.headerOption = headerOption;
     },
+    setUserName(state, userName) {
+      state.userName = userName;
+    },
   },
   actions: {
-    fetchRepositories({ commit }) {
+    fetchRepositoriesOnUsersChange({ commit }, userName) {
       githubAxiosInstance
-        .get(`users/${gitHubUser}/repos`)
+        .get(`users/${userName}/repos`)
         .then((res) => {
           commit("setRepositories", res.data);
         })
-        //error message
+        .catch((error) => console.log(error));
+      commit("setUserName", userName);
+    },
+    fetchRepositories({ commit, state }) {
+      githubAxiosInstance
+        .get(`users/${state.userName}/repos`)
+        .then((res) => {
+          commit("setRepositories", res.data);
+        })
         .catch((error) => console.log(error));
     },
-    fetchCommits({ commit }, repositoryName) {
+    fetchCommits({ commit, state }, repositoryName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repositoryName}/commits?per_page=10`)
+        .get(`repos/${state.userName}/${repositoryName}/commits?per_page=10`)
         .then((res) => {
           commit("setCommits", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchBranches({ commit }, repositoryName) {
+    fetchBranches({ commit, state }, repositoryName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repositoryName}/branches`)
+        .get(`repos/${state.userName}/${repositoryName}/branches`)
         .then((res) => {
           commit("setBranches", res.data);
         })
         .catch((error) => console.log(error));
     },
-    fetchIssues({ commit }, repositoryName) {
+    fetchIssues({ commit, state }, repositoryName) {
       githubAxiosInstance
-        .get(`repos/${gitHubUser}/${repositoryName}/issues`)
+        .get(`repos/${state.userName}/${repositoryName}/issues`)
         .then((res) => {
           commit("setIssues", res.data);
         })
@@ -112,6 +126,9 @@ export default new Vuex.Store({
     },
     getHeaderOption: (state) => {
       return state.headerOption;
+    },
+    getUserName: (state) => {
+      return state.userName;
     },
   },
   plugins: [vuexCookie.plugin, vuexSession.plugin],

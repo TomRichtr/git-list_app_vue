@@ -37,6 +37,7 @@ export default new Vuex.Store({
     repositoryId: 0,
     headerOption: "repository",
     userName: "",
+    errorMessage: "",
   },
   mutations: {
     setRepositories(state, repositories) {
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     setUserName(state, userName) {
       state.userName = userName;
     },
+    setErrorMessage(state, errorMessage) {
+      state.errorMessage = errorMessage;
+    },
   },
   actions: {
     fetchRepositoriesOnUsersChange({ commit }, userName) {
@@ -68,8 +72,9 @@ export default new Vuex.Store({
         .get(`users/${userName}/repos`)
         .then((res) => {
           commit("setRepositories", res.data);
+          commit("setErrorMessage", "");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => commit("setErrorMessage", error.message));
       commit("setUserName", userName);
     },
     fetchRepositories({ commit, state }) {
@@ -77,32 +82,36 @@ export default new Vuex.Store({
         .get(`users/${state.userName}/repos`)
         .then((res) => {
           commit("setRepositories", res.data);
+          commit("setErrorMessage", "");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => commit("setErrorMessage", error.message));
     },
     fetchCommits({ commit, state }, repositoryName) {
       githubAxiosInstance
         .get(`repos/${state.userName}/${repositoryName}/commits?per_page=10`)
         .then((res) => {
           commit("setCommits", res.data);
+          commit("setErrorMessage", "");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => commit("setErrorMessage", error.message));
     },
     fetchBranches({ commit, state }, repositoryName) {
       githubAxiosInstance
         .get(`repos/${state.userName}/${repositoryName}/branches`)
         .then((res) => {
           commit("setBranches", res.data);
+          commit("setErrorMessage", "");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => commit("setErrorMessage", error.message));
     },
     fetchIssues({ commit, state }, repositoryName) {
       githubAxiosInstance
         .get(`repos/${state.userName}/${repositoryName}/issues`)
         .then((res) => {
           commit("setIssues", res.data);
+          commit("setErrorMessage", "");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => commit("setErrorMessage", error.message));
     },
   },
   getters: {
@@ -129,6 +138,9 @@ export default new Vuex.Store({
     },
     getUserName: (state) => {
       return state.userName;
+    },
+    getErrorMessage: (state) => {
+      return state.errorMessage;
     },
   },
   plugins: [vuexCookie.plugin, vuexSession.plugin],

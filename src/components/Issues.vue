@@ -1,56 +1,64 @@
 <template>
-  <div class="main-wrapper">
-    <div
-      :class="checkEven(i)"
-      class="item-wrapper row"
-      :id="issue.id"
-      :key="issue.id"
-      v-for="(issue, i) in issues"
-    >
-      <div class="col-sm-6 col-md-4 col-lg-4 title-issue">
-        <p class="title">Title</p>
-        <a
-          class="text"
-          :title="issue.title"
-          :href="issue.html_url"
-          target="_blank"
-          >{{ convertStringTitle(issue.title) }}
-          <font-awesome-icon
-            class="link-marker"
-            :icon="['fa', 'mouse']"
-            size="sm"
-        /></a>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-4 body">
-        <p class="title">Body</p>
-        <p class="text" :title="issue.body">
-          {{ convertStringDescription(issue.body) }}
-        </p>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-4 filled-by">
-        <p class="title">Filled by</p>
-        <a class="text" :href="issue.user.html_url" target="_blank"
-          >{{ issue.user.login }}
-          <font-awesome-icon
-            class="link-marker"
-            :icon="['fa', 'mouse']"
-            size="sm"
-        /></a>
-      </div>
+  <div>
+    <p class="no-issues" v-if="issuesLength != false && error === ''">
+      {{ issuesLength }}
+    </p>
+    <p class="no-issues" v-if="error">
+      {{ error }}
+    </p>
+    <div class="main-wrapper" v-if="!error">
+      <div
+        :class="checkEven(i)"
+        class="item-wrapper row"
+        :id="issue.id"
+        :key="issue.id"
+        v-for="(issue, i) in issues"
+      >
+        <div class="col-sm-6 col-md-4 col-lg-4 title-issue">
+          <p class="title">Title</p>
+          <a
+            class="text"
+            :title="issue.title"
+            :href="issue.html_url"
+            target="_blank"
+            >{{ convertStringTitle(issue.title) }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+          /></a>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 body">
+          <p class="title">Body</p>
+          <p class="text" :title="issue.body">
+            {{ convertStringDescription(issue.body) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 filled-by">
+          <p class="title">Filled by</p>
+          <a class="text" :href="issue.user.html_url" target="_blank"
+            >{{ issue.user.login }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+          /></a>
+        </div>
 
-      <div class="col-sm-6 col-md-4 col-lg-4 created-at">
-        <p class="title">Created At</p>
-        <p class="text">{{ convertDate(issue.created_at) }}</p>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-4 last-update">
-        <p class="title">Last Update</p>
-        <p class="text">
-          {{ convertDateRelative(issue.updated_at) }}
-        </p>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-4 state">
-        <p class="title">State</p>
-        <p class="text">{{ convertString(issue.state) }}</p>
+        <div class="col-sm-6 col-md-4 col-lg-4 created-at">
+          <p class="title">Created At</p>
+          <p class="text">{{ convertDate(issue.created_at) }}</p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 last-update">
+          <p class="title">Last Update</p>
+          <p class="text">
+            {{ convertDateRelative(issue.updated_at) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 state">
+          <p class="title">State</p>
+          <p class="text">{{ convertString(issue.state) }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -72,7 +80,11 @@ export default {
     ...mapGetters({
       issues: "getIssues",
       repositoryName: "getRepositoryName",
+      error: "getErrorMessage",
     }),
+    issuesLength() {
+      return this.issues.length === 0 ? "No issues to show" : false;
+    },
   },
   methods: {
     ...mapActions({ fetchIssues: "fetchIssues" }),
@@ -92,6 +104,11 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.no-issues {
+  margin-top: $xl-size * 1.3;
+  display: block;
+  text-align: center;
+}
 .main-wrapper {
   margin-top: $l-size * 1.1;
   @media (max-width: $sm) {

@@ -1,23 +1,31 @@
 <template>
-  <div class="main-wrapper">
-    <div
-      :class="checkEven(i)"
-      class="item-wrapper row"
-      :id="branch.commit.sha"
-      :key="branch.commit.sha"
-      v-for="(branch, i) in branches"
-    >
-      <div class="col-sm">
-        <p class="title">
-          Name
-        </p>
-        <p class="text">{{ convertStringTitle(branch.name) }}</p>
-      </div>
-      <div class="col-sm">
-        <p class="title">Protection Status</p>
-        <p class="text">
-          {{ convertProctectionStatus(branch.protected) }}
-        </p>
+  <div>
+    <p class="no-branches" v-if="branchesLength != false && error === ''">
+      {{ branchesLength }}
+    </p>
+    <p class="no-branches" v-if="error">
+      {{ error }}
+    </p>
+    <div class="main-wrapper" v-if="!error">
+      <div
+        :class="checkEven(i)"
+        class="item-wrapper row"
+        :id="branch.commit.sha"
+        :key="branch.commit.sha"
+        v-for="(branch, i) in branches"
+      >
+        <div class="col-sm">
+          <p class="title">
+            Name
+          </p>
+          <p class="text">{{ convertStringTitle(branch.name) }}</p>
+        </div>
+        <div class="col-sm">
+          <p class="title">Protection Status</p>
+          <p class="text">
+            {{ convertProctectionStatus(branch.protected) }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -36,7 +44,11 @@ export default {
     ...mapGetters({
       branches: "getBranches",
       repositoryName: "getRepositoryName",
+      error: "getErrorMessage",
     }),
+    branchesLength() {
+      return this.branches.length === 0 ? "No branches to show" : false;
+    },
   },
   methods: {
     ...mapActions({ fetchBranches: "fetchBranches" }),
@@ -53,6 +65,11 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.no-branches {
+  margin-top: $xl-size * 1.3;
+  display: block;
+  text-align: center;
+}
 .main-wrapper {
   margin-top: $l-size * 1.1;
   @media (max-width: $sm) {

@@ -1,44 +1,52 @@
 <template>
-  <div class="main-wrapper">
-    <div
-      :class="checkEven(i)"
-      class="item-wrapper row"
-      :id="commit.sha"
-      :key="commit.sha"
-      v-for="(commit, i) in commits"
-    >
-      <div class="col-sm-6 col-md-6 col-lg-6 commited-by">
-        <p class="title">Commited By</p>
-        <a
-          :href="`mailto: ${commit.commit.author.email}`"
-          class="text"
-          target="_blank"
-        >
-          {{ commit.commit.author.name }}
-          <font-awesome-icon
-            class="link-marker"
-            :icon="['fa', 'mouse']"
-            size="sm"
-          />
-        </a>
-      </div>
+  <div>
+    <p class="no-commits" v-if="commitsLength != false && error === ''">
+      {{ commitsLength }}
+    </p>
+    <p class="no-commits" v-if="error">
+      {{ error }}
+    </p>
+    <div class="main-wrapper" v-if="!error">
+      <div
+        :class="checkEven(i)"
+        class="item-wrapper row"
+        :id="commit.sha"
+        :key="commit.sha"
+        v-for="(commit, i) in commits"
+      >
+        <div class="col-sm-6 col-md-6 col-lg-6 commited-by">
+          <p class="title">Commited By</p>
+          <a
+            :href="`mailto: ${commit.commit.author.email}`"
+            class="text"
+            target="_blank"
+          >
+            {{ commit.commit.author.name }}
+            <font-awesome-icon
+              class="link-marker"
+              :icon="['fa', 'mouse']"
+              size="sm"
+            />
+          </a>
+        </div>
 
-      <div class="col-sm-6 col-md-6 col-lg-6 message">
-        <p class="title">Message</p>
-        <p class="text" :title="commit.commit.message">
-          {{ convertStringTitle(commit.commit.message) }}
-        </p>
-      </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 message">
+          <p class="title">Message</p>
+          <p class="text" :title="commit.commit.message">
+            {{ convertStringTitle(commit.commit.message) }}
+          </p>
+        </div>
 
-      <div class="col-sm-6 col-md-6 col-lg-6 commited-at">
-        <p class="title">Commited at</p>
-        <p class="text">
-          {{ convertDate(commit.commit.author.date) }}
-        </p>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-6 comments-count">
-        <p class="title">Comments Count</p>
-        <p class="text">{{ commit.commit.comment_count }}</p>
+        <div class="col-sm-6 col-md-6 col-lg-6 commited-at">
+          <p class="title">Commited at</p>
+          <p class="text">
+            {{ convertDate(commit.commit.author.date) }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 comments-count">
+          <p class="title">Comments Count</p>
+          <p class="text">{{ commit.commit.comment_count }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -53,7 +61,11 @@ export default {
     ...mapGetters({
       commits: "getCommits",
       repositoryName: "getRepositoryName",
+      error: "getErrorMessage",
     }),
+    commitsLength() {
+      return this.commits.length === 0 ? "No commits to show" : false;
+    },
   },
   methods: {
     ...mapActions({ fetchCommits: "fetchCommits" }),
@@ -70,6 +82,11 @@ export default {
 <style scoped lang="scss">
 @import "../../scss/variables.scss";
 
+.no-commits {
+  margin-top: $xl-size * 1.3;
+  display: block;
+  text-align: center;
+}
 .main-wrapper {
   margin-top: $l-size * 1.1;
   @media (max-width: $sm) {
